@@ -1,16 +1,32 @@
-<div>
-    <% intrebari.forEach(element => { %>
-        <input type="radio" id="huey" name="drone" value="huey">
-        <label for="huey"> <%= element.intrebare %></label>
-    <%  }); %>
+<div style="text-align: center;width: 100%;">
+  <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;text-align: center;font-size: 9vh;">Chestionar</h1>
+  <div style="margin-top: 3vh; padding-left: 5vh;padding-right: 5vh; border: 2px solid black;padding-bottom: 3vh;font-family: 'Trebuchet MS', Helvetica, sans-serif;margin:0 auto;width: fit-content;">
+      <% intrebari.forEach(element => { %>
+        <form action="/rezultat-chestionar" method="POST">
+        <div>
+          <h3><%= element.intrebare %></h3>
+          <% for(var i=0; i<4; i++) { %>
+            <input type="radio" id="<%= element.variante[i] %>" name="<%= element.intrebare %>" value=<%= i %>>
+            <label for="<%= element.variante[i] %>"> <%= element.variante[i] %></label>
+          <% } %>
+        </div>
+      <%  }); %>
+        <input  style="margin-top: 3vh;appearance: none;
+        background-color: #ec313a;
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;color: #fff;
+        cursor: pointer;
+        z-index: 5;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 6px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;" type="submit" value="Trimite raspunsuri"/>
+      </form>
   </div>
-
-  <div>
-    <input type="radio" id="dewey" name="drone" value="dewey">
-    <label for="dewey">Dewey</label>
-  </div>
-
-  <div>
-    <input type="radio" id="louie" name="drone" value="louie">
-    <label for="louie">Louie</label>
 </div>

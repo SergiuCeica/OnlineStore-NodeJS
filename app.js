@@ -3,6 +3,7 @@ const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 6789;
+const fs = require('fs').promises;
 // directorul 'views' va conține fișierele .ejs (html + js executat la server)
 app.set("view engine", "ejs");
 // suport pentru layout-uri - implicit fișierul care reprezintă template-ul site-ului este views/layout.ejs
@@ -17,21 +18,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // proprietățile obiectului Response - res - https://expressjs.com/en/api.html#res
 app.get("/", (req, res) => res.send("Hello World"));
 // la accesarea din browser adresei http://localhost:6789/chestionar se va apela funcția specificată;
-app.get("/chestionar", (req, res) => {
-  const listaIntrebari = [
-    {
-      intrebare: "Întrebarea 1",
-      variante: ["varianta 1", "varianta 2", "varianta 3", "varianta 4"],
-      corect: 0,
-    },
-    //...
-  ];
+async function citesteIntrebari(){
+  const data= await fs.readFile("intrebari.json","utf-8");
+  let intrebari = Buffer.from(data);
+  return JSON.parse(intrebari);
+}
+app.get("/chestionar", async (req, res) => {
+  var listaIntrebari = await citesteIntrebari();
   // în fișierul views/chestionar.ejs este accesibilă variabila 'intrebari' care conține vectorul de întrebări
   res.render("chestionar", { intrebari: listaIntrebari });
 });
-app.post("/rezultat-chestionar", (req, res) => {
-  console.log(req.body);
-  res.send("formular: " + JSON.stringify(req.body));
+app.post("/rezultat-chestionar", async (req, res) => {
+  var raspunsuri=req.body;
+  var listaIntrebari = await citesteIntrebari();
+  console.log(raspunsuri);
+  var c=0;
+  for(let prop in raspunsuri){
+    for( let intr in listaIntrebari){
+      if(listaIntrebari[intr].intrebare == prop){
+        console.log(listaIntrebari[intr].corect + "      ---   " + raspunsuri[prop])
+        if(listaIntrebari[intr].corect == raspunsuri[prop]){
+          c=c+1;
+        }
+      }
+    }
+  }
+  console.log('Intrebari corecte: ' + c);
+  res.send('Intrebari corecte: ' + c);
 });
 app.listen(port, () =>
   console.log(`Serverul rulează la adresa http://localhost:`)
