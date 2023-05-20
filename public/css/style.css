@@ -1,0 +1,225 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    /*background: hsla(265, 100%, 87%, 1);
+
+    background: linear-gradient(45deg, hsla(265, 100%, 87%, 1) 0%, hsla(254, 53%, 66%, 1) 32%, hsla(238, 28%, 43%, 1) 70%, hsla(244, 28%, 23%, 1) 100%);
+
+    background: -moz-linear-gradient(45deg, hsla(265, 100%, 87%, 1) 0%, hsla(254, 53%, 66%, 1) 32%, hsla(238, 28%, 43%, 1) 70%, hsla(244, 28%, 23%, 1) 100%);
+
+    background: -webkit-linear-gradient(45deg, hsla(265, 100%, 87%, 1) 0%, hsla(254, 53%, 66%, 1) 32%, hsla(238, 28%, 43%, 1) 70%, hsla(244, 28%, 23%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#DABFFF", endColorstr="#907AD6", GradientType=1 );*/
+    background-image: url(../bckg2.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+.background-template{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    background-image: url("../bckg.jpg");
+    background-position:right;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.wrapper{
+    height: 100vh;
+    width: 100%;
+}
+nav{
+    position: fixed;
+    display: flex;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+    background-color: #2C2A4A;
+    width: 100%;
+    text-align: left;
+    transition: 0.4s;
+    border-bottom: 2px solid white;
+    z-index: 5;
+    justify-content: space-between; /* Plasează elementele la capetele barii de navigație */
+    align-items: center;
+}
+nav form{
+    margin-right: 2vh;
+}
+nav h1{
+    color: white; 
+    position: relative;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 4vh; 
+    font-weight: 800;
+    padding-left: 2vh;
+}
+.titleText{
+    color: white; 
+    position: relative;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 9vh; 
+    text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black;
+    font-weight: 800;
+    padding-left: 2vh;
+    padding-top: -10vh;
+}
+.titleDiv h2{
+    color: white; 
+    position: relative;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 3vh; 
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    font-weight: 800;
+    padding-left: 2vh;
+}
+.titleDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100vh; /* Poziționează div-ul în centrul paginii pe verticală */
+  }
+  
+  
+  .titleDiv .button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1em; /* Spațiu de sus între titlu și butoane */
+    padding-left: 2vh;
+  }
+  
+  .titleDiv .button-container form {
+    margin: 0 0.5em; /* Spațiu între butoane */
+  }
+
+#lista-produse{
+    position: relative;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+}
+.productCard{
+    background-color: black;
+    height: 300px;
+    width: 30%;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 2vh;
+    margin-left: 2vh;
+}
+.productCard h1{
+    color: white; 
+    position: relative;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 4vh; 
+    font-weight: 800;
+}
+.productCard h2{
+    color: white; 
+    position: relative;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 3vh; 
+    font-weight: 800;
+}
+#divAutentificare {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60vh;
+    height: 50vh;
+    transform: translate(-50%, -50%);
+    background-image: url('../camera.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+.verificareAutentificare{
+    width: 100%;
+    top:33%;
+    position: relative;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.verificareAutentificare input{
+    margin: 0 auto;
+    display: block;
+}
+.verificareAutentificare label {
+    margin: 0 auto;
+    display: block;
+    text-align: center; /* Adăugăm text-align: center pentru a alinia etichetele în centru */
+}
+.alert{
+    font-family: 'Raleway',sans-serif; 
+    font-size: 2vh; 
+    font-weight: 800;
+    color:red;
+}  
+input[type="text"],
+input[type="password"]{
+      display: block;
+      box-sizing: border-box;
+      position:relative;
+      margin: 0 auto;
+      margin-bottom: 3vh;
+      color: white;
+      background: none;
+      padding: 0.5vh;
+      width: 28vh;
+      z-index: 5;
+      height: 4.5vh;
+      border: none;
+      border-bottom: 2px solid gray ;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 3vh;
+      transition: 0.2s ease;
+  }
+input[type="text"]:focus,
+input[type="password"]:focus{
+    border: none;
+    border-bottom: 2px solid #ec313a;
+    color: #c2070a;
+    outline: none;
+    transition: 0.2s ease;
+}
+.simpleText{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 2.5vh;
+    padding-right: 2vh;
+}
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.button-3{
+        appearance: none;
+        background-color: #ec313a;
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;color: #fff;
+        cursor: pointer;
+        z-index: 4;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 6px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+}

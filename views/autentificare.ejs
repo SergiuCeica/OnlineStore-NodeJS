@@ -1,25 +1,9 @@
-<span style="color: rgb(55, 221, 132); text-align: center; font-weight: bold"><%- (mesaj !== undefined) ?  mesaj : "" -%></span><br><br>
-<div id="divAutentificare" style="align-items: center;display: block;width: 100%;position: absolute;background-color: aquamarine;">
-    <form action="/verificare-autentificare" method="POST">
-            <label for="nume"> Nume: </label>
-            <input type="text" id="nume" name="nume"/>
-            <label for="parola"> Parola: </label>
-            <input type="password" id="parola" name="parola"/>
-        <input  style="margin-top: 3vh;appearance: none;
-            background-color: #ec313a;
-            border: 1px solid rgba(27, 31, 35, .15);
-            border-radius: 6px;
-            box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-            box-sizing: border-box;color: #fff;
-            cursor: pointer;
-            z-index: 5;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 20px;
-            padding: 6px 16px;
-            position: relative;
-            text-align: center;
-            text-decoration: none;" type="submit" value="Autentificare"/>
+
+<div id="divAutentificare">
+    <form action="/verificare-autentificare" method="POST" class="verificareAutentificare">
+            <input type="text" id="nume" name="nume" placeholder="Nume"/>
+            <input type="password" id="parola" name="parola" placeholder="Parola"/>
+        <input  class="button-3" type="submit" value="Autentificare"/>
+        <span class="alert"><%- (mesaj !== undefined) ?  mesaj : "" -%></span>
     </form>
 </div> 

@@ -1,1 +1,49 @@
-<h2 style="text-align: center; font-size: 35px;">Bine ai venit, <span style="color:rgb(69, 248, 197);"><%- (username !== undefined) ? username : "Utilizator"-%></span> !</h2>
+<div class="background-template">
+    
+</div>
+<nav>
+    <h1>FocusFrame</h1>
+    <form action="/logout" method="POST">
+        <% if(username != undefined ){ %>
+            <label class="simpleText">Logat ca <span><%- username %></span></label>
+            <button type="submit" class="button-3">Deconectare</button>&emsp;
+        <%}else{%>
+            <div class="button-container">
+                <button class="button-3" type="submit">Conectare</button>
+              </div>
+        <%}%>
+    </form>
+</nav>
+<div class="titleDiv">
+    <h1 class="titleText">Bine ai venit, <span style="color:#7FDEFF;"><%- (username !== undefined) ? username : "Utilizator"-%></span> !</h1>
+    <h2>Cel mai mare magazin de aparate foto din Romania</h2>
+    <div class="button-container">
+        <form action="/creare-bd" method="GET">
+            <button type="submit" class="button-3" style="width: 25vh;background-color:#2C2A4A;">Creare BD</button>
+        </form>
+        <form action="/inserare-bd" method="GET">
+            <% if(username) { %>
+                <input type="hidden" name="username" value="<%= username %>">
+            <% } %>
+            <button type="submit" class="button-3" style="width: 30vh;">Cumpara acum</button>
+        </form>
+    </div>
+</div>
+<div id="lista-produse">
+    <% if(listaProduse != undefined ){ %>
+        <% listaProduse.forEach(element => { %>
+            <div class="productCard">
+                <h1> <%= element.nume %></h1> 
+                <form action="/adaugare-cos" method="POST">
+                    <input type="hidden" name="idProdus" value="<%= element.id_prod %>">
+                    <%if(username){%>
+                        <button type="submit" name="id" class="button-3" style="margin-top: 2vh;">Adaugă în coș</button><br><br>
+                    <%} else {%>
+                        <button type="submit" name="id" style="background-color: #7FDEFF;margin-top: 2vh;" class="button-3" disabled>Adaugă în coș</button><br><br>
+                    <%}%>
+                </form>
+                <h2> <%= element.pret %> Lei</h2> 
+            </div>
+        <%  }); %>
+    <%}%>
+</div>
