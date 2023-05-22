@@ -18,7 +18,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-  maxAge: 10000
+  maxAge: 600000
   }
 }));
 // directorul 'public' va conține toate resursele accesibile direct de către client (e.g., fișiere css, javascript, imagini)
@@ -68,7 +68,7 @@ app.post("/rezultat-chestionar", async (req, res) => {
     }
   }
   console.log('Intrebari corecte: ' + c);
-  res.send('Intrebari corecte: ' + c);
+  res.render("rezultat-chestionar",{nrIntrebari : c});
 });
 app.get('/autentificare', (req, res) =>{
   res.clearCookie("mesajEroare");
@@ -133,76 +133,127 @@ app.get('/creare-bd',(req,res) =>{
 
 app.get('/inserare-bd',async (req,res) =>{
 
-  let resetAutoIncrement = "DELETE FROM sqlite_sequence WHERE name='produse'";
   await new Promise((resolve, reject) => {
-    db.run("DELETE FROM produse;", function(err) {
-      if (err) {
-        return console.error(err.message);
-      }
-      console.log(`Baza de date curata`);
-    });
-    db.run(resetAutoIncrement, function(err) {
+    db.get('SELECT COUNT(*) AS count FROM produse', (err, result) => {
       if (err) {
         reject(err);
+        return;
+      }
+
+      if (result.count === 0) {
+        var values = [
+          ['Canon EOS 4000D', '2749,00'],
+          ['Canon EOS 6D', '6499,90'],
+          ['Canon EOS 250D', '3349,90'],
+          ['Sony Cyber-Shot', '8899,90'],
+          ['Sony DSC-HX60', '989,99'],
+          ['Nikon Z 50', '4489,90'],
+          ['Nikon Z6 II', '8799,99']
+        ];
+
+        db.serialize(() => {
+          db.run(createTable, (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              console.log('Tabela produse creată sau deja existentă');
+            }
+          });
+
+          var insertStmt = db.prepare('INSERT INTO produse (nume, pret) VALUES (?, ?)');
+          values.forEach((produs) => {
+            insertStmt.run(produs[0], produs[1]);
+          });
+          insertStmt.finalize();
+
+          console.log('Produsele predefinite au fost inserate cu succes');
+          resolve();
+        });
       } else {
-        console.log(`Autoincrement resetat pentru tabela produse`);
+        console.log('Exista deja produse in baza de date');
         resolve();
       }
     });
   });
-  var values = [
-    ['Canon EOS 4000D', '2749,00'],
-    ['Canon EOS 6D', '6499,90'],
-    ['Canon EOS 250D', '3349,90'],
-    ['Sony Cyber-Shot', '8899,90'],
-    ['Sony DSC-HX60', '989,99'],
-    ['Nikon Z 50', '4489,90'],
-    ['Nikon Z6 II', '8799,99']
-  ];
-  
-  let sql = 'INSERT INTO produse (nume,pret) VALUES ';
 
-  for(var i=0;i<values.length-1;i++){
-    sql+= '("'+values[i][0]+'","'+values[i][1]+'"),';
-  }
-  sql+='("'+values[values.length-1][0]+'","'+values[values.length-1][1]+'");';
+  if (!req.session.produse || req.session.produse.length === 0) {
+    let extrageProduse = `SELECT * FROM produse`;
 
-  await new Promise((resolve, reject) => {
-    db.run(sql, function(err) {
-      if (err) {
-        console.log("Aici");
-        reject(err);
-      } else {
-        console.log(`Rows inserted ${this.changes}`);
-        resolve();
-      }
-    });
-  });
-let extrageProduse = `SELECT * FROM produse`;
-
-await new Promise((resolve, reject) => {
-  db.all(extrageProduse, [], (err, rows) => {
-    if (err) {
-      reject(err);
-    } else {
-      rows.forEach((row) => {
-        req.session.produse.push(row);
+    await new Promise((resolve, reject) => {
+      db.all(extrageProduse, [], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          req.session.produse = rows;
+          res.redirect('/');
+          resolve();
+        }
       });
-      resolve();
-    }
-  });
-});
-  res.redirect('/');
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.post('/adaugare-cos',(req,res)=>{
-  var data=req.body;
-  if(req.session.cos){
-    req.session.cos.push(data['idProdus']);
-  }else{
-    req.session.cos = [data['idProdus']];
+  var data = req.body;
+  var produs = {
+    idProdus: data['idProdus'],
+    nume: data['nume'],
+    pret: data['pret']
+  };
+
+  if (req.session.cos) {
+    req.session.cos.push(produs);
+  } else {
+    req.session.cos = [produs];
   }
+
   console.log(req.session.cos);
+  res.redirect('/');
+});
+
+app.get('/vizualizare-cos', (req, res) => {
+  res.render('vizualizare-cos', { cos: req.session.cos, username: req.session.username, rol: req.session.rol });
+});
+
+app.get('/admin', (req, res) => {
+  res.render('admin',{username: req.session.username, rol:req.session.rol});
+});
+
+app.post('/adauga-produs',async (req,res) =>{
+  console.log(req.body);
+
+  // Verifică dacă produsul există deja în baza de date
+  var verificaProdus = `SELECT COUNT(*) AS count FROM produse WHERE nume = ?`;
+  var produsNume = req.body['numeProdus'];
+
+  await new Promise((resolve, reject) => {
+    db.get(verificaProdus, [produsNume], (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        if (row.count > 0) {
+          // Produsul există deja în baza de date
+          console.log('Produsul există deja în baza de date.');
+        } else {
+          // Produsul nu există, poate fi inserat
+          var sql = "INSERT INTO produse (nume, pret) VALUES (?, ?)";
+          var produsPret = req.body['pretProdus'];
+
+          db.run(sql, [produsNume, produsPret], function (err) {
+            if (err) {
+              reject(err);
+            } else {
+              console.log(`Rows inserted ${this.changes}`);
+              resolve();
+            }
+          });
+        }
+      }
+    });
+  });
+
   res.redirect('/');
 });
 

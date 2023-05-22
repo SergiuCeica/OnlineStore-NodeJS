@@ -1,0 +1,23 @@
+<form action="/logout" method="POST">
+    <% if(username != undefined ){ %>
+        <button class="button-3" type="submit" >Deconectare</button>&emsp;
+        <label>Logat ca <span><%- username %></span></label>
+    <%}else{%>
+        <button class="button-3" type="submit" >Conectare</button>
+    <%}%>
+</form><br><br>
+<% if(rol == 'admin' ){ %>
+    <div style="width: 100%;
+    position: relative;
+    align-items: center;
+    display: flex;
+    flex-direction: column;">
+        <form action="/adauga-produs" method="POST">
+            <input type="text" name="numeProdus" placeholder="Nume produs">
+            <input type="text" name="pretProdus" placeholder="Pret produs">
+            <button class="button-3" type="submit">Adaugă produs</button>
+        </form>
+    </div>
+<%}else{%>
+    <h1 class="normalh1">Trebuie sa fii administrator pentru a accesa aceasta pagina.</h1>
+<%}%>

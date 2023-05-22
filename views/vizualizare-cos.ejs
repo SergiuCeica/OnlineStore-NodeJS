@@ -1,0 +1,15 @@
+<div id="cos-cumparaturi">
+  <h1 class="normalh1">Produse din coș:</h1>
+  <% if (cos && cos.length > 0) { %>
+    <ul>
+      <% cos.forEach(produs => { %>
+        <li>
+          <h2 class="normalh2"><%= produs.nume %></h2>
+          <p class="normalp">Pret: <%= produs.pret %> Lei</p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="normalp">Coșul este gol.</p>
+  <% } %>
+</div>

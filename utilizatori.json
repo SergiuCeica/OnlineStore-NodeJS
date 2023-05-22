@@ -2,4 +2,5 @@
 {"utilizator":"fadsf","parola":"asf", "nume":  "fadsf", "prenume":  "TEST", "rol":"user"},
 {"utilizator":"fadsffds","parola":"asfs", "nume":  "fadsffds", "prenume":  "TEST", "rol":"user"},
 {"utilizator":"marcel","parola":"asd", "nume":  "marcel", "prenume":  "TEST", "rol":"user"},
-{"utilizator":"marcel","parola":"", "nume":  "TEST", "prenume":  "TEST", "rol":"user"}]
+{"utilizator":"marcel","parola":"", "nume":  "TEST", "prenume":  "TEST", "rol":"user"},
+{"utilizator":"admin","parola":"admin", "nume":  "Admin", "prenume":  "Admin", "rol":"admin"}]

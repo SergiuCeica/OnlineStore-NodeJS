@@ -3,6 +3,9 @@
 </div>
 <nav>
     <h1>FocusFrame</h1>
+    <form action="/vizualizare-cos" method="GET">
+        <button type="submit" class="button-3">Vezi cos</button>
+    </form>
     <form action="/logout" method="POST">
         <% if(username != undefined ){ %>
             <label class="simpleText">Logat ca <span><%- username %></span></label>
@@ -33,16 +36,18 @@
     <% if(listaProduse != undefined ){ %>
         <% listaProduse.forEach(element => { %>
             <div class="productCard">
-                <h1> <%= element.nume %></h1> 
+                <h1 class="normalh1"> <%= element.nume %></h1> 
                 <form action="/adaugare-cos" method="POST">
                     <input type="hidden" name="idProdus" value="<%= element.id_prod %>">
+                    <input type="hidden" name="nume" value="<%= element.nume %>">
+                    <input type="hidden" name="pret" value="<%= element.pret %>">
                     <%if(username){%>
                         <button type="submit" name="id" class="button-3" style="margin-top: 2vh;">Adaugă în coș</button><br><br>
                     <%} else {%>
                         <button type="submit" name="id" style="background-color: #7FDEFF;margin-top: 2vh;" class="button-3" disabled>Adaugă în coș</button><br><br>
                     <%}%>
                 </form>
-                <h2> <%= element.pret %> Lei</h2> 
+                <h2 class="normalh2"> <%= element.pret %> Lei</h2> 
             </div>
         <%  }); %>
     <%}%>

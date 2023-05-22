@@ -116,19 +116,41 @@ nav h1{
     margin-top: 2vh;
     margin-left: 2vh;
 }
-.productCard h1{
+.normalh1{
     color: white; 
     position: relative;
     font-family: 'Raleway',sans-serif; 
     font-size: 4vh; 
     font-weight: 800;
 }
-.productCard h2{
+.normalh2{
     color: white; 
     position: relative;
     font-family: 'Raleway',sans-serif; 
     font-size: 3vh; 
     font-weight: 800;
+}
+.normalp{
+    color: white; 
+    position: relative;
+    font-family: 'Raleway',sans-serif; 
+    font-size: 2vh; 
+    font-weight: 800;
+}
+#cos-cumparaturi{
+    width: 70%;
+    height: fit-content;
+    background: rgb(0, 0, 0,0.7);
+    box-shadow: 10px 10px 5px black;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    text-align: center;
+    justify-self: center;
+    justify-content: center;
 }
 #divAutentificare {
     position: absolute;

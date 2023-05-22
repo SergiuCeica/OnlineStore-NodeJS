@@ -1,10 +1,10 @@
 <div style="text-align: center;width: 100%;">
-  <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;text-align: center;font-size: 9vh;">Chestionar</h1>
+  <h1 class="normalh1" style="font-size: 7vh;">Chestionar</h1>
   <div style="margin-top: 3vh; padding-left: 5vh;padding-right: 5vh; border: 2px solid black;padding-bottom: 3vh;font-family: 'Trebuchet MS', Helvetica, sans-serif;margin:0 auto;width: fit-content;">
       <% intrebari.forEach(element => { %>
         <form action="/rezultat-chestionar" method="POST">
-        <div>
-          <h3><%= element.intrebare %></h3>
+        <div style="padding-top: 2vh;padding-bottom: 2vh;">
+          <h2 class="normalh2" style="color:black;padding-bottom: 2vh;"><%= element.intrebare %></h2>
           <% for(var i=0; i<4; i++) { %>
             <input type="radio" id="<%= element.variante[i] %>" name="<%= element.intrebare %>" value=<%= i %>>
             <label for="<%= element.variante[i] %>"> <%= element.variante[i] %></label>
